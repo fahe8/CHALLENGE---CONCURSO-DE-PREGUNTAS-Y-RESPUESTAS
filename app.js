@@ -11,17 +11,31 @@ const roundhtml = document.getElementById('round');
 const table = document.getElementById('table')
 const exit = document.getElementById('exit')
 
-
-const pregunta = new Questions(
-arrayQuestions[0].question,
-arrayQuestions[0].correct,
-arrayQuestions[0].answers,
-arrayQuestions[0].category,
-);
-
 const numRound = new Round()
 
-numRound.setQuestion(pregunta)
+
+function filterQuestion() {
+  const filtrarpregunta = arrayQuestions.filter(e => {
+    return e.category == numRound.round;
+  })
+
+  const rand = Math.floor(Math.random()*filtrarpregunta.length);
+  const nuevaArray = filtrarpregunta[rand];
+  return nuevaArray;
+}
+
+const jsonPregunta = filterQuestion()
+
+const pregunta = new Questions(
+  jsonPregunta.question,
+  jsonPregunta.correct,
+  jsonPregunta.answers,
+  jsonPregunta.category
+  );
+
+  numRound.setQuestion(pregunta)
+
+
 
 function resetQuestion() {
   cambiarRespuestas.forEach((e,i) => {
@@ -33,8 +47,14 @@ function resetQuestion() {
 }
 resetQuestion()
 
-
-numRound.validateAnswer('15')
+respuestas.addEventListener('click', clicker)
+function clicker(event){
+  const userAnswer = event.target.textContent;
+  const validateAns = numRound.validateAnswer(userAnswer)
+  if(validateAns){
+    //pasa de ronda y arroja otra pregunta
+  }
+}
 
 
 
