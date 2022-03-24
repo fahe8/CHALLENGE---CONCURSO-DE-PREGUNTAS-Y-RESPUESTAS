@@ -12,7 +12,29 @@ const table = document.getElementById('table')
 const exit = document.getElementById('exit')
 
 
+const pregunta = new Questions(
+arrayQuestions[0].question,
+arrayQuestions[0].correct,
+arrayQuestions[0].answers,
+arrayQuestions[0].category,
+);
 
+const numRound = new Round()
+
+numRound.setQuestion(pregunta)
+
+function resetQuestion() {
+  cambiarRespuestas.forEach((e,i) => {
+    e.innerHTML = pregunta.answers[i]
+  })
+  
+  roundhtml.innerHTML = `Round: ${numRound.round}`
+  preguntahtml.innerHTML = pregunta.question
+}
+resetQuestion()
+
+
+numRound.validateAnswer('15')
 
 
 
