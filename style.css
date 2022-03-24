@@ -14,9 +14,33 @@ body {
     max-width: 70%;
     margin: 0 auto;
     text-align: center;
+    background-color: aquamarine;
+    position: relative;
 }
 
 .category {
     font-size: 20px;
     margin: 20px auto
+}
+
+.container_answer {
+    display:  flex;
+    flex-direction: column;
+}
+.container_answer .answer {
+    margin:  25px auto;
+    width: 95%;
+    height: 50px;
+}
+
+
+
+.table {
+    width: 60%;
+    height: 400px;
+    background-color: blueviolet;
+    position: absolute;
+    left: 20%;
+    margin-top: 30px;
+    
 }
