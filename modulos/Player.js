@@ -1,9 +1,13 @@
 export class Player {
-    constructor(name) {
-      this.name = name;
+    constructor() {
       this.pts = 0;
       this.maxRound = 1;
     }
+
+    setName(playerName) {
+      this.playerName = playerName
+    }
+
     addPoints(points) {
       this.pts += points;
     }
@@ -11,8 +15,6 @@ export class Player {
     increaseMaxRound() {
       this.maxRound += 1;
     }
-    getName() {
-      return this.name;
-    }
+    
   }
   

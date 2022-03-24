@@ -4,12 +4,14 @@ import { Questions } from "./modulos/Questions.js";
 import { arrayQuestions } from "./Data/data.js";
 import { Game } from "./modulos/Game.js";
 
-const respuestas = document.getElementById('containerAnswer');
-const preguntahtml = document.getElementById('pregunta');
-const cambiarRespuestas = document.querySelectorAll('.answer')
-const roundhtml = document.getElementById('round');
-const table = document.getElementById('table')
-const exit = document.getElementById('exit')
+const respuestas = document.getElementById('containerAnswer'),
+      preguntahtml = document.getElementById('pregunta'),
+      cambiarRespuestas = document.querySelectorAll('.answer'),
+      roundhtml = document.getElementById('round'),
+      table = document.getElementById('table'),
+      exit = document.getElementById('exit'),
+      htmlPoints = document.getElementById('htmlPoints'),
+      htmlMaxRound = document.getElementById('htmlMaxRound')
 
 const numRound = new Round()
 
@@ -35,7 +37,7 @@ const pregunta = new Questions(
 
   numRound.setQuestion(pregunta)
 
-  const newPlayer = new Player("TWBauer");
+  const newPlayer = new Player();
 
   const startGame = new Game(newPlayer,numRound)
 
@@ -50,6 +52,32 @@ function resetQuestion() {
 }
 resetQuestion()
 
+//Probemos el localStorage
+export function save_localStorage() {
+  
+  const nickName= prompt(`Ingrese su NickName: `)
+  newPlayer.setName(nickName)
+  let arrayLocalStorage = JSON.parse(localStorage.getItem('datos'))|| [];
+  const a = {
+    nombre:newPlayer.playerName,
+    puntos: startGame.player.pts
+  }
+  arrayLocalStorage.push(a)
+  localStorage.setItem('datos', JSON.stringify(arrayLocalStorage));
+
+}
+
+
+export function getLocalStorage() {
+  // const nombre = localStorage.getItem('name');
+  // const puntos = JSON.parse(localStorage.getItem('points'));
+  const recupere = JSON.parse(localStorage.getItem('datos'))
+  const result = `${recupere[0].nombre} ${recupere[0].puntos}`
+  return result
+}
+
+
+
 respuestas.addEventListener('click', clicker)
 function clicker(event){
   const userAnswer = event.target.textContent;
@@ -58,25 +86,28 @@ function clicker(event){
     //pasa de ronda y arroja otra pregunta
     startGame.player.addPoints(startGame.round.round * 10)
     startGame.player.increaseMaxRound()
-    console.log(startGame.player.pts)
-    console.log(startGame.player.maxRound)
     startGame.round.increaseRound()
+    htmlPoints.innerHTML = `Puntaje: ${startGame.player.pts}`
     startGame.setNewRound();
     resetQuestion()
+
+    if(startGame.round.round> 5){
+      save_localStorage();
+
+      table.classList.add('table')
+      table.innerHTML = 'GANASTE '
+      a = document.createElement("div")
+      disableAnswer();
+    }
   }
-  if(startGame.round.round > 4){
-      
-    table.classList.add('table')
-    table.innerHTML = 'GANASTE '
-    table.innerHTML = 'TABLA '
-    table.innerHTML = ''
-    disableAnswer();
-  }
+  
 }
 
 exit.addEventListener('click', () => {
   table.classList.add('table')
   table.innerHTML = 'Te retiraste'
+  save_localStorage()
+
   disableAnswer();
   
 })

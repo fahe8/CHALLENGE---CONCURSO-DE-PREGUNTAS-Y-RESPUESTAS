@@ -34,7 +34,6 @@ body {
 }
 
 
-
 .table {
     width: 60%;
     height: 400px;
@@ -43,4 +42,10 @@ body {
     left: 20%;
     margin-top: 30px;
     
+}
+
+.score {
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 20px;
 }
