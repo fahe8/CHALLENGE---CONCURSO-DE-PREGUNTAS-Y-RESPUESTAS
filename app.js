@@ -69,11 +69,18 @@ export function save_localStorage() {
 
 
 export function getLocalStorage() {
-  // const nombre = localStorage.getItem('name');
-  // const puntos = JSON.parse(localStorage.getItem('points'));
+  table.classList.add('table')
+  table.innerHTML='perdio';
   const recupere = JSON.parse(localStorage.getItem('datos'))
-  const result = `${recupere[0].nombre} ${recupere[0].puntos}`
-  return result
+  
+
+  for (let i = 0; i <= recupere.length; i++) {
+    const newElement = document.createElement("p")
+    table.appendChild(newElement)
+    newElement.innerHTML+=`${recupere[i].nombre}: ${recupere[i].puntos}`
+
+  }
+  
 }
 
 
@@ -93,10 +100,7 @@ function clicker(event){
 
     if(startGame.round.round> 5){
       save_localStorage();
-
-      table.classList.add('table')
-      table.innerHTML = 'GANASTE '
-      a = document.createElement("div")
+      getLocalStorage();
       disableAnswer();
     }
   }
@@ -104,9 +108,8 @@ function clicker(event){
 }
 
 exit.addEventListener('click', () => {
-  table.classList.add('table')
-  table.innerHTML = 'Te retiraste'
-  save_localStorage()
+  getLocalStorage();
+  save_localStorage();
 
   disableAnswer();
   

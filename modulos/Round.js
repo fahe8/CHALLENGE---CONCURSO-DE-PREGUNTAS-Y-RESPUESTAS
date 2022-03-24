@@ -21,13 +21,8 @@ export class Round {
          return true;
           
       }
-      save_localStorage()
-      const table = document.getElementById('table')
-      table.classList.add('table')
-      table.innerHTML='perdio';
-      const a = document.createElement("div")
-      table.appendChild(a)
-      a.innerHTML = getLocalStorage();
+      save_localStorage();
+      getLocalStorage();
       disableAnswer();
       console.log("paila");
       return  false;
