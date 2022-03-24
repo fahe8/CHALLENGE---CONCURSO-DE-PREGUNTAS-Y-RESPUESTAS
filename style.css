@@ -41,6 +41,7 @@ body {
     position: absolute;
     left: 20%;
     margin-top: 30px;
+    overflow: scroll;
     
 }
 

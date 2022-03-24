@@ -69,17 +69,22 @@ export function save_localStorage() {
 
 
 export function getLocalStorage() {
-  table.classList.add('table')
-  table.innerHTML='perdio';
-  const recupere = JSON.parse(localStorage.getItem('datos'))
+  setTimeout(() => {
+    table.classList.add('table')
+    table.innerHTML='perdio';
+    const recupere = JSON.parse(localStorage.getItem('datos'))
+    console.log(recupere.sort((a, b) => b.puntos - a.puntos));
+    
+    recupere.filter(a => a.puntos)
+
+    for (let i = 0; i <= recupere.length; i++) {
+      const newElement = document.createElement("p")
+      table.appendChild(newElement)
+      newElement.innerHTML+=`${recupere[i].nombre}: ${recupere[i].puntos}`
+
+    }
+  }, 2000);
   
-
-  for (let i = 0; i <= recupere.length; i++) {
-    const newElement = document.createElement("p")
-    table.appendChild(newElement)
-    newElement.innerHTML+=`${recupere[i].nombre}: ${recupere[i].puntos}`
-
-  }
   
 }
 
