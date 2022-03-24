@@ -56,10 +56,35 @@ function clicker(event){
   const validateAns = numRound.validateAnswer(userAnswer)
   if(validateAns){
     //pasa de ronda y arroja otra pregunta
+    startGame.player.addPoints(startGame.round.round * 10)
+    startGame.player.increaseMaxRound()
+    console.log(startGame.player.pts)
+    console.log(startGame.player.maxRound)
     startGame.round.increaseRound()
     startGame.setNewRound();
     resetQuestion()
   }
+  if(startGame.round.round > 4){
+      
+    table.classList.add('table')
+    table.innerHTML = 'GANASTE '
+    table.innerHTML = 'TABLA '
+    table.innerHTML = ''
+    disableAnswer();
+  }
+}
+
+exit.addEventListener('click', () => {
+  table.classList.add('table')
+  table.innerHTML = 'Te retiraste'
+  disableAnswer();
+  
+})
+
+export function disableAnswer() {
+  cambiarRespuestas.forEach((e) => {
+    e.setAttribute('disabled','')
+  })
 }
 
 
