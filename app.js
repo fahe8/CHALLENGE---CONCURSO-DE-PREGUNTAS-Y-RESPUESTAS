@@ -35,15 +35,18 @@ const pregunta = new Questions(
 
   numRound.setQuestion(pregunta)
 
+  const newPlayer = new Player("TWBauer");
+
+  const startGame = new Game(newPlayer,numRound)
 
 
 function resetQuestion() {
   cambiarRespuestas.forEach((e,i) => {
-    e.innerHTML = pregunta.answers[i]
+    e.innerHTML = startGame.round.question.answers[i]
   })
   
   roundhtml.innerHTML = `Round: ${numRound.round}`
-  preguntahtml.innerHTML = pregunta.question
+  preguntahtml.innerHTML = startGame.round.question.question
 }
 resetQuestion()
 
@@ -53,6 +56,9 @@ function clicker(event){
   const validateAns = numRound.validateAnswer(userAnswer)
   if(validateAns){
     //pasa de ronda y arroja otra pregunta
+    startGame.round.increaseRound()
+    startGame.setNewRound();
+    resetQuestion()
   }
 }
 
