@@ -13,7 +13,6 @@ export class Game {
     const filtrarpregunta = arrayQuestions.filter((e) => {
       return e.category == this.round.round;
     });
-    console.log(filtrarpregunta);
     const rand = Math.floor(Math.random() * filtrarpregunta.length);
     const nuevaArray = filtrarpregunta[rand];
     return nuevaArray;
