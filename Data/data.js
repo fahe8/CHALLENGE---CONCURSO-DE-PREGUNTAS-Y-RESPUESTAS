@@ -32,10 +32,10 @@ export const arrayQuestions = [
     category: 1,
     question:
       "¿Qué libro de Gabriel García Márquez es considerado una de las obras más famosas de la literatura mundial?",
-    correct: "Cien años de Soleados",
+    correct: "Cien años de Soleadad",
     answers: [
       "Tres años de vacaciones",
-      "Cien años de Soleados",
+      "Cien años de Soleadad",
       "Crónica de una muerte anunciada",
       "El libro de la selva",
     ],
