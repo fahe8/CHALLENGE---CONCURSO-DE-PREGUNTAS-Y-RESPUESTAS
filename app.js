@@ -25,12 +25,14 @@ startGame.setNewRound();
 
 refreshDOM();
 
+//Cada que se hace un evento click en una respuesta, validará la respuesta, aumenta cambia de ronda
+// Cuando llegue a la ronda 5 muestra que ganaste y la tabla de clasificación
 answersHtml.addEventListener("click", clicker);
 function clicker(event) {
   const userAnswer = event.target.textContent;
   const validateAns = numRound.validateAnswer(userAnswer);
   if (validateAns) {
-    //pasa de ronda y arroja otra pregunta
+
     startGame.player.addPoints(startGame.round.round * 10);
     startGame.round.increaseRound();
     htmlPoints.innerHTML = `Puntaje: ${startGame.player.pts}`;
@@ -45,6 +47,7 @@ function clicker(event) {
   }
 }
 
+// Evento para rendirse
 exit.addEventListener("click", () => {
   saveLocalStorage(exitText);
   getLocalStorage();
