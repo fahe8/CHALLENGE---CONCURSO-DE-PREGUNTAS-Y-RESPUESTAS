@@ -13,8 +13,10 @@ body {
     min-width: 300px;
     max-width: 70%;
     margin: 0 auto;
+    margin-top: 20px;
     text-align: center;
     background-color: aquamarine;
+    border-radius: 20px;
     position: relative;
 }
 
@@ -33,20 +35,43 @@ body {
     height: 50px;
 }
 
+.winOrLose {
+    font-size: 60px;
+    width: 60%;
+    height: auto;
+    margin-top: 30px;
+    position: absolute;
+    top: 25%;
+    left: 20%;
+    background-color: rgb(13, 228, 228);
+    border: 1px solid black;
+    border-radius: 20px;
+}
 
 .table {
+    font-size: 40px;
     width: 60%;
     height: 400px;
-    background-color: blueviolet;
-    position: absolute;
-    left: 20%;
+    padding-top: 20px;
     margin-top: 30px;
-    overflow: scroll;
+    background-color: rgba(0, 0, 0, 0.849);
+    color: white;
+    position: absolute;
+    top: 0;
+    left: 20%;
+    overflow-y:scroll;
+    border-radius: 20px;
     
+}
+
+.table p {
+    font-size: 20px;
+    padding-top: 20px;
 }
 
 .score {
     display: flex;
     justify-content: space-around;
     padding-bottom: 20px;
+    font-size: 30px;
 }

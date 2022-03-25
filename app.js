@@ -1,130 +1,52 @@
 import { Player } from "./modulos/Player.js";
 import { Round } from "../modulos/Round.js";
-import { Questions } from "./modulos/Questions.js";
-import { arrayQuestions } from "./Data/data.js";
 import { Game } from "./modulos/Game.js";
+import {
+  getLocalStorage,
+  saveLocalStorage,
+} from "./Utilidades/LocalStorage.js";
+import { refreshDOM, disableAnswer } from "./Utilidades/DOM.js";
 
-const respuestas = document.getElementById('containerAnswer'),
-      preguntahtml = document.getElementById('pregunta'),
-      cambiarRespuestas = document.querySelectorAll('.answer'),
-      roundhtml = document.getElementById('round'),
-      table = document.getElementById('table'),
-      exit = document.getElementById('exit'),
-      htmlPoints = document.getElementById('htmlPoints'),
-      htmlMaxRound = document.getElementById('htmlMaxRound')
+// import { LocalStorageClass } from "./modulos/LocalStorage.js";
 
-const numRound = new Round()
+const respuestas = document.getElementById("containerAnswer"),
+  exit = document.getElementById("exit"),
+  htmlPoints = document.getElementById("htmlPoints");
 
+//Inicializa las clases en el orden correcto para poder darles uso
+const numRound = new Round();
+const newPlayer = new Player();
+export const startGame = new Game(newPlayer, numRound);
 
-function filterQuestion() {
-  const filtrarpregunta = arrayQuestions.filter(e => {
-    return e.category == numRound.round;
-  })
+//De la clase Game hago uso del metodo que corresponde a mostrar la pregunta por cada ronda
+startGame.setNewRound();
 
-  const rand = Math.floor(Math.random()*filtrarpregunta.length);
-  const nuevaArray = filtrarpregunta[rand];
-  return nuevaArray;
-}
+refreshDOM();
 
-const jsonPregunta = filterQuestion()
-
-const pregunta = new Questions(
-  jsonPregunta.question,
-  jsonPregunta.correct,
-  jsonPregunta.answers,
-  jsonPregunta.category
-  );
-
-  numRound.setQuestion(pregunta)
-
-  const newPlayer = new Player();
-
-  const startGame = new Game(newPlayer,numRound)
-
-
-function resetQuestion() {
-  cambiarRespuestas.forEach((e,i) => {
-    e.innerHTML = startGame.round.question.answers[i]
-  })
-  
-  roundhtml.innerHTML = `Round: ${numRound.round}`
-  preguntahtml.innerHTML = startGame.round.question.question
-}
-resetQuestion()
-
-//Probemos el localStorage
-export function save_localStorage() {
-  
-  const nickName= prompt(`Ingrese su NickName: `)
-  newPlayer.setName(nickName)
-  let arrayLocalStorage = JSON.parse(localStorage.getItem('datos'))|| [];
-  const a = {
-    nombre:newPlayer.playerName,
-    puntos: startGame.player.pts
-  }
-  arrayLocalStorage.push(a)
-  localStorage.setItem('datos', JSON.stringify(arrayLocalStorage));
-
-}
-
-
-export function getLocalStorage() {
-  setTimeout(() => {
-    table.classList.add('table')
-    table.innerHTML='perdio';
-    const recupere = JSON.parse(localStorage.getItem('datos'))
-    console.log(recupere.sort((a, b) => b.puntos - a.puntos));
-    
-    recupere.filter(a => a.puntos)
-
-    for (let i = 0; i <= recupere.length; i++) {
-      const newElement = document.createElement("p")
-      table.appendChild(newElement)
-      newElement.innerHTML+=`${recupere[i].nombre}: ${recupere[i].puntos}`
-
-    }
-  }, 2000);
-  
-  
-}
-
-
-
-respuestas.addEventListener('click', clicker)
-function clicker(event){
+respuestas.addEventListener("click", clicker);
+function clicker(event) {
   const userAnswer = event.target.textContent;
-  const validateAns = numRound.validateAnswer(userAnswer)
-  if(validateAns){
+  const validateAns = numRound.validateAnswer(userAnswer);
+  if (validateAns) {
     //pasa de ronda y arroja otra pregunta
-    startGame.player.addPoints(startGame.round.round * 10)
-    startGame.player.increaseMaxRound()
-    startGame.round.increaseRound()
-    htmlPoints.innerHTML = `Puntaje: ${startGame.player.pts}`
+    startGame.player.addPoints(startGame.round.round * 10);
+    startGame.round.increaseRound();
+    htmlPoints.innerHTML = `Puntaje: ${startGame.player.pts}`;
     startGame.setNewRound();
-    resetQuestion()
+    refreshDOM();
 
-    if(startGame.round.round> 5){
-      save_localStorage();
+    if (startGame.round.round > 5) {
+      const win = "Has acertado todas";
+      saveLocalStorage(win);
       getLocalStorage();
       disableAnswer();
     }
   }
-  
 }
 
-exit.addEventListener('click', () => {
+exit.addEventListener("click", () => {
+  const exit = "Te has rendindo";
+  saveLocalStorage(exit);
   getLocalStorage();
-  save_localStorage();
-
   disableAnswer();
-  
-})
-
-export function disableAnswer() {
-  cambiarRespuestas.forEach((e) => {
-    e.setAttribute('disabled','')
-  })
-}
-
-
-
+});
