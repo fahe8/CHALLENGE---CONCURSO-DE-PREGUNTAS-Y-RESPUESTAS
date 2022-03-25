@@ -9,9 +9,11 @@ import { refreshDOM, disableAnswer } from "./Utilidades/DOM.js";
 
 // import { LocalStorageClass } from "./modulos/LocalStorage.js";
 
-const respuestas = document.getElementById("containerAnswer"),
+const answersHtml = document.getElementById("containerAnswer"),
   exit = document.getElementById("exit"),
-  htmlPoints = document.getElementById("htmlPoints");
+  htmlPoints = document.getElementById("htmlPoints"),
+  exitText = "Te has rendindo",
+  win = "Has acertado todas";
 
 //Inicializa las clases en el orden correcto para poder darles uso
 const numRound = new Round();
@@ -23,7 +25,7 @@ startGame.setNewRound();
 
 refreshDOM();
 
-respuestas.addEventListener("click", clicker);
+answersHtml.addEventListener("click", clicker);
 function clicker(event) {
   const userAnswer = event.target.textContent;
   const validateAns = numRound.validateAnswer(userAnswer);
@@ -36,7 +38,6 @@ function clicker(event) {
     refreshDOM();
 
     if (startGame.round.round > 5) {
-      const win = "Has acertado todas";
       saveLocalStorage(win);
       getLocalStorage();
       disableAnswer();
@@ -45,8 +46,7 @@ function clicker(event) {
 }
 
 exit.addEventListener("click", () => {
-  const exit = "Te has rendindo";
-  saveLocalStorage(exit);
+  saveLocalStorage(exitText);
   getLocalStorage();
   disableAnswer();
 });

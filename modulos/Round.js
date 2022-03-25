@@ -1,6 +1,8 @@
 import { saveLocalStorage, getLocalStorage } from "../Utilidades/LocalStorage.js";
 import { disableAnswer } from "../Utilidades/DOM.js";
 
+const lose = "Has perdido";
+
 export class Round {
   constructor() {
     this.round = 1;
@@ -22,7 +24,6 @@ export class Round {
     if (userAnswer === this.question.getAnsCorrect()) {
       return true;
     }
-    const lose = "Has perdido";
     saveLocalStorage(lose);
     getLocalStorage();
     disableAnswer();
